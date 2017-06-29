@@ -2,16 +2,12 @@
 
 public class KeyControlledBody : MonoBehaviour
 {
-    private Rigidbody _rigidbody;
     private float _time;
 
-    public float speed = 3.0f;
-    public float rotSpeed = 4.0f;
-
-    public void Start()
-    {
-        _rigidbody = GetComponent<Rigidbody>();
-    }
+    [SerializeField]
+    private Rigidbody _targetRigidbody;
+    public float speed = 5.0f;
+    public float rotSpeed = 200.0f;
 
     public void Update()
     {
@@ -34,7 +30,7 @@ public class KeyControlledBody : MonoBehaviour
             setVelocity += new Vector3(0, 0, -speed);
 
         if (setVelocity != Vector3.zero)
-            _rigidbody.velocity = setVelocity;
+            _targetRigidbody.velocity = setVelocity;
 
         Vector3 setRotation = Vector3.zero;
 
@@ -52,6 +48,6 @@ public class KeyControlledBody : MonoBehaviour
             setRotation += new Vector3(0, 0, -rotSpeed);
 
         if (setRotation != Vector3.zero)
-            _rigidbody.angularVelocity = setRotation;
+            _targetRigidbody.angularVelocity = setRotation;
     }
 }
