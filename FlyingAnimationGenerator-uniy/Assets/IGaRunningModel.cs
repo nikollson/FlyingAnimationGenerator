@@ -1,7 +1,11 @@
 ﻿using System.Collections.Generic;
 
-interface IGaRunningModel
+public interface IGaRunningModel
 {
     void InitValue(List<float> value);
     int GetDataLength();
+    bool IsEnd();
+    float GetEvaluate();
+    void Erase();
+    List<float> GetData();
 }
