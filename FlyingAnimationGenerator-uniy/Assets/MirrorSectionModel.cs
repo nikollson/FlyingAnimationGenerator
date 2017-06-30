@@ -103,22 +103,21 @@ public class MirrorSectionModel : MonoBehaviour, IGaRunningModel
 
         for (var i = 0; i < NormalRigidbodies.Count; i++)
         {
-            NormalRigidbodies[i].AddRelativeTorque(torqueData[sectionNum][i]);
+            NormalRigidbodies[i].AddRelativeForce(torqueData[sectionNum][i]);
         }
         for (var p = 0; p < MirrorRigidbodies.Count; p++)
         {
             var i = p * 2 + NormalRigidbodies.Count;
             if (isMirror == false)
             {
-                MirrorRigidbodies[p].LeftRigidbody.AddRelativeTorque(torqueData[sectionNum][i]);
-                MirrorRigidbodies[p].RightRigidbody.AddRelativeTorque(torqueData[sectionNum][i + 1]);
+                MirrorRigidbodies[p].LeftRigidbody.AddRelativeForce(torqueData[sectionNum][i], ForceMode.VelocityChange);
+                MirrorRigidbodies[p].RightRigidbody.AddRelativeForce(torqueData[sectionNum][i + 1], ForceMode.VelocityChange);
             }
             else
             {
-                MirrorRigidbodies[p].LeftRigidbody.AddRelativeTorque(Vector3.Scale(new Vector3(-1, 1, -1), torqueData[sectionNum][i + 1]));
-                MirrorRigidbodies[p].RightRigidbody.AddRelativeTorque(Vector3.Scale(new Vector3(-1, 1, -1), torqueData[sectionNum][i]));
+                MirrorRigidbodies[p].LeftRigidbody.AddRelativeForce(Vector3.Scale(new Vector3(-1, 1, -1), torqueData[sectionNum][i + 1]), ForceMode.VelocityChange);
+                MirrorRigidbodies[p].RightRigidbody.AddRelativeForce(Vector3.Scale(new Vector3(-1, 1, -1), torqueData[sectionNum][i]), ForceMode.VelocityChange);
             }
-
         }
 
         if (count > moveTimeMax)

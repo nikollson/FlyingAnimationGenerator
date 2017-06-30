@@ -21,7 +21,7 @@ public class ChildGaModelGenerator : MonoBehaviour, IGaDataGenerator
         for (int i = 0; i < dataLength; i++)
         {
             float value = dataList[Random.Range(0, dataList.Count)][i];
-            if (Random.Range(0, 1) < errorPar) value = Random.Range(-1, 1);
+            if (Random.Range(0f, 1f) < errorPar) value = Random.Range(-1f, 1f);
             ret.Add(value);
         }
         return ret;
