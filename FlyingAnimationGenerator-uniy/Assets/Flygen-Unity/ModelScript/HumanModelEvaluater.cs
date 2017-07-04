@@ -2,21 +2,33 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UniRx;
+using UniRx.Triggers;
 
-static class HumanModelEvaluater
+class HumanModelEvaluater
 {
-    public static float EvaluateHeadPosition(HumanModel humanModel)
+    private HumanModel _humanModel;
+    private float _dontFallTime;
+    private float _limitTime;
+
+    public HumanModelEvaluater(HumanModel humanModel, float limitTime)
     {
-        return 0;
+        _humanModel = humanModel;
+        _limitTime = limitTime;
     }
 
-    public static float EvaluateTrunkPosition(HumanModel humanModel)
+    public float EvaluateHeadPosition()
     {
-        return 0;
+        return _humanModel.Head.GetMoveDistance().z;
     }
 
-    public static bool IsFalled()
+    public float EvaluateTrunkPosition()
     {
-        return true;
+        return _humanModel.Trunk.GetMoveDistance().z;
+    }
+
+    public float EvaluateDontFallTime()
+    {
+        return _dontFallTime;
     }
 }

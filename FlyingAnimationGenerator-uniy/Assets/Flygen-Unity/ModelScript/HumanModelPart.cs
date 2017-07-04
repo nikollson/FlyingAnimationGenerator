@@ -4,9 +4,14 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-class HumanModelPart : MonoBehaviour
+public class HumanModelPart : MonoBehaviour
 {
+    [SerializeField]
+    private Rigidbody _rigidbody;
+
     private Vector3 _startPosition;
+
+    public Rigidbody Rigidbody { get { return _rigidbody; } }
 
     public void Start()
     {
