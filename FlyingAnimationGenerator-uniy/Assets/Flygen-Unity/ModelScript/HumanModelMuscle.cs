@@ -28,7 +28,7 @@ public class HumanModelMuscle : MonoBehaviour
     {
         var distance = GetDistance();
         var dir = distance.normalized;
-        var targetDistance = _startDistance + _lengthChange;
+        var targetDistance = _startDistance * (1 + _lengthChange);
         var pullPower = (distance.magnitude - targetDistance) * _springPower + _additionalPower;
 
         _rightRigidbody.AddForceAtPosition(dir * pullPower * -1, _rightRigidbody.transform.position);
