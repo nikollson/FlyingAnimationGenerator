@@ -32,13 +32,19 @@ public class ExperimentRunner : MonoBehaviour
 
         for (int i = 0; i < _modelNum; i++)
         {
-            var obj = Instantiate(PrefabGameObject);
-            var script = obj.GetComponent<IGaRunningModel>();
-            script.InitValue(generator.GenerateData(script.GetDataLength()));
-            obj.transform.parent = transform;
-            obj.transform.position = transform.position + _modelDistance * i;
-            modelList.Add(obj.GetComponent<IGaRunningModel>());
+            var dataLength = PrefabGameObject.GetComponent<IGaRunningModel>().GetDataLength();
+            var data = generator.GenerateData(dataLength);
+            MakeModel(data, i);
         }
+    }
+    private void MakeModel(List<float> data, int index)
+    {
+        var obj = Instantiate(PrefabGameObject);
+        var script = obj.GetComponent<IGaRunningModel>();
+        script.InitValue(data);
+        obj.transform.parent = transform;
+        obj.transform.position = transform.position + _modelDistance * index;
+        modelList.Add(obj.GetComponent<IGaRunningModel>());
     }
 
     public void Update()
@@ -48,7 +54,10 @@ public class ExperimentRunner : MonoBehaviour
         {
             modelList = modelList.OrderByDescending(x => x.GetEvaluate()).ToList();
             childModelGenerator.SetNextParent(modelList.OrderByDescending(x => x.GetEvaluate()).Take(_takeNum).ToList());
+
+            var topData = modelList[0].GetData();
             MakeModels(childModelGenerator);
+            MakeModel(topData, -1);
         }
     }
 }

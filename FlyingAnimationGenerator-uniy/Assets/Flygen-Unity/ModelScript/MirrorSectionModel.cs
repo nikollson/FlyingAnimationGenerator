@@ -46,7 +46,8 @@ public class MirrorSectionModel : MonoBehaviour, IGaRunningModel
             torqueData.Add(data);
         }
 
-        var collisionGround = GetComponentsInChildren<DetectCollisionWithTag>();
+        var collisionGround = GetComponentsInChildren<TaggedObjectCollisionDetecter>();
+
         foreach (var a in collisionGround)
             a.OnEnter = DoEvaluate;
     }
@@ -57,7 +58,10 @@ public class MirrorSectionModel : MonoBehaviour, IGaRunningModel
         isEnd = true;
         evaluate = headObjects.Select(x => x.transform.position.z).Max();
         foreach (var a in headObjects)
-            evaluate = Mathf.Max(evaluate, a.transform.position.z);
+            evaluate = Mathf.Max(evaluate, a.transform.position.z) * 0f + count;
+
+        if (count > moveTimeMax)
+            evaluate = 0f;
     }
 
     public int GetDataLength()
@@ -110,13 +114,13 @@ public class MirrorSectionModel : MonoBehaviour, IGaRunningModel
             var i = p * 2 + NormalRigidbodies.Count;
             if (isMirror == false)
             {
-                MirrorRigidbodies[p].LeftRigidbody.AddRelativeForce(torqueData[sectionNum][i], ForceMode.VelocityChange);
-                MirrorRigidbodies[p].RightRigidbody.AddRelativeForce(torqueData[sectionNum][i + 1], ForceMode.VelocityChange);
+                MirrorRigidbodies[p].LeftRigidbody.AddRelativeForce(torqueData[sectionNum][i], ForceMode.Acceleration);
+                MirrorRigidbodies[p].RightRigidbody.AddRelativeForce(torqueData[sectionNum][i + 1], ForceMode.Acceleration);
             }
             else
             {
-                MirrorRigidbodies[p].LeftRigidbody.AddRelativeForce(Vector3.Scale(new Vector3(-1, 1, -1), torqueData[sectionNum][i + 1]), ForceMode.VelocityChange);
-                MirrorRigidbodies[p].RightRigidbody.AddRelativeForce(Vector3.Scale(new Vector3(-1, 1, -1), torqueData[sectionNum][i]), ForceMode.VelocityChange);
+                MirrorRigidbodies[p].LeftRigidbody.AddRelativeForce(Vector3.Scale(new Vector3(-1, 1, -1), torqueData[sectionNum][i + 1]), ForceMode.Acceleration);
+                MirrorRigidbodies[p].RightRigidbody.AddRelativeForce(Vector3.Scale(new Vector3(-1, 1, -1), torqueData[sectionNum][i]), ForceMode.Acceleration);
             }
         }
 

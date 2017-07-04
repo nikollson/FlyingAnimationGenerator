@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System;
 
-public class DetectCollisionWithTag : MonoBehaviour
+public class TaggedObjectCollisionDetecter : MonoBehaviour
 {
     public Action OnEnter { get; set; }
 
