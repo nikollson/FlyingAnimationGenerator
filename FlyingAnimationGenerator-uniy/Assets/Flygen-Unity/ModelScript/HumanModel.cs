@@ -14,4 +14,6 @@ class HumanModel : MonoBehaviour
     private HumanModelPart _trunk;
     [SerializeField]
     private HumanModelPart[] _enableHitGroundParts;
+
+
 }
